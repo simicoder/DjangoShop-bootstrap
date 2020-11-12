@@ -1,0 +1,36 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<main>
+    <div class="row">
+        <form class="col-sm-12 col-md-6 m-1" method="GET" action="">
+            <input class="form-control" type="text" placeholder="search" name="q" value="{{query}}">
+        </form>
+
+        <button class="btn btn-secondary dropdown-toggle m-1 col-sm-12 col-md-5 m-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Categories
+        </button>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <ol class="navbar-nav mr-auto">
+                <li class="dropdown-item"><a href="/">All</a></li>
+                {% for category in categories %}
+                    <li class="dropdown-item"><a href="/{{ category }}">{{ category }}</a></li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+
+    <div class="row col-12">
+        {% for product in products %}
+            <div class="col-sm-12 col-md-4 col-lg-3 offset-md-1 mt-3" >
+                <a class="products h-100" align="center" href="/products/{{ product.id }}">
+                    <img src="{{ product.images.all.first }}" class="img-fluid" width="250px" style="border-radius: 5px">
+                    <h2>{{ product.title }}</h2>
+                    <h2>{{ product.price }} $</h2>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock content %}

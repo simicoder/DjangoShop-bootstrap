@@ -1,0 +1,31 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<main>
+    <h1 align="center">Add Your Item</h1>
+    <div class="row">
+            <form method="post" action="" enctype="multipart/form-data"> {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                <div class="row col-12">
+                    {{ img_form.management_form }}
+                    <div class="file col-6 col-lg-2"><label for="id_form-0-img"><img class="img-fluid" height="150em" src="/static/store/crimg.png" id="0" onchange="PreviewImage();"/></label>{{ img_form.0 }}</div>
+                    <div class="file col-6 col-lg-2"><label for="id_form-1-img"><img class="img-fluid" height="150em" src="/static/store/crimg.png" id="1" onchange="PreviewImage();"/></label>{{ img_form.1 }}</div>
+                    <div class="file col-6 col-lg-2"><label for="id_form-2-img"><img class="img-fluid" height="150em" src="/static/store/crimg.png" id="2" onchange="PreviewImage();"/></label>{{ img_form.2 }}</div>
+                    <div class="file col-6 col-lg-2"><label for="id_form-3-img"><img class="img-fluid" height="150em" src="/static/store/crimg.png" id="3" onchange="PreviewImage();"/></label>{{ img_form.3 }}</div>
+                    <div class="file col-6 col-lg-2"><label for="id_form-4-img"><img class="img-fluid" height="150em" src="/static/store/crimg.png" id="4" onchange="PreviewImage();"/></label>{{ img_form.4 }}</div>
+                    <div class="file col-6 col-lg-2"><label for="id_form-5-img"><img class="img-fluid" height="150em" src="/static/store/crimg.png" id="5" onchange="PreviewImage();"/></label>{{ img_form.5 }}</div>
+                </div>
+                <div class="container col-xs-12 col-md-4" align="center">
+                    <div>{{ form.title }}</div><br>
+                    <div>{{ form.price }}</div><br>
+                    <div>{{ form.description }}</div><br>
+
+                    <label for="category">Category </label>{{ form.category }}<br>
+                    <input type="submit" name="Save" value="Add"/>
+                </div>
+            </form>
+    </div>
+</main>
+{% endblock content %}

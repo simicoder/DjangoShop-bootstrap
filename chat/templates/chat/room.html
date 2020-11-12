@@ -1,0 +1,132 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+
+<main>
+
+<div class="row">
+
+<div class="container overflow-auto bg-dark col-2" style="height: 30em;">
+  <ol class="col-12">
+  {% for chat in chats1 %}
+    <li class="dropdown-item center text-center"><a href="/chat/{{ chat }}">{{ chat.user_2 }}</a></li>
+  {% endfor %}
+  {% for chat in chats2 %}
+    <li class="dropdown-item center text-center"><a href="/chat/{{ chat }}">{{ chat.user_1 }}</a></li>
+  {% endfor %}
+  </ol>
+</div>
+
+<div class="container col-10">
+  <div id="messages" class="messages container bg-dark overflow-auto col-12 col-md-6" style="height: 30em;">
+    <div id="chat-log" class="container">
+    </div>
+  </div>
+
+  <div class="message-input p-1 bg-dark container col-12 col-md-6">
+    <div class="wrap">
+      <input id="chat-message-input" class="col-10 col-md-10 col-lg-10" type="text" placeholder="Write your message..."/>
+      <button id="chat-message-submit" class="submit">
+        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+</main>
+
+<script src="{% static 'reconnecting-websocket.js' %}"></script>
+<script>
+function scroll_chat(){
+  $('#messages').scrollTop($('#messages')[0].scrollHeight);
+};
+
+document.body.onload = function(){scroll_chat();};
+
+
+    var roomName = {{ room_name_json }};
+    var username = {{ username }};
+
+    var chatSocket = new ReconnectingWebSocket(
+        'ws://' + window.location.host +
+        '/ws/chat/' + roomName + '/');
+
+    chatSocket.onopen = function(e) {
+      fetchMessages();
+    }
+
+    chatSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+
+        if (data['command'] === 'messages') {
+          data['messages'].reverse();
+          for (let i=0; i<data['messages'].length; i++) {
+            createMessage(data['messages'][i]);
+          }
+        } else if (data['command'] === 'new_message'){
+          createMessage(data['message']);
+        }
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        var messageInputDom = document.getElementById('chat-message-input');
+        var message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'command': 'new_message',
+            'message': message,
+            'from': username
+        }));
+
+        messageInputDom.value = '';
+    };
+
+    function fetchMessages() {
+      chatSocket.send(JSON.stringify({
+      'command': 'fetch_messages',
+      'user': username
+       }));
+    }
+
+    function createMessage(data) {
+      var author = data['author'];
+      var msgListTag = document.createElement('div');
+      var imgTag = document.createElement('img');
+      var pTag = document.createElement('p');
+      pTag.textContent = data.content;
+
+      if (data['read'])
+      {
+        pTag.insertAdjacentHTML( 'beforeend', '<svg height="0.6em"  viewBox="0 0 16 16" class="bi bi-check-circle-fill pl-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>');
+      }
+      else
+      {
+        pTag.insertAdjacentHTML( 'beforeend', '<svg height="0.6em" viewBox="0 0 16 16" class="bi bi-check-circle pl-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/></svg>');
+      }
+
+
+      // imgTag.src = '#';
+      
+      if (author === username) {
+        msgListTag.className = 'sent';
+      } else {
+        msgListTag.className = 'replies';
+      }
+      // msgListTag.appendChild(imgTag);
+      msgListTag.appendChild(pTag);
+      document.querySelector('#chat-log').appendChild(msgListTag);
+      scroll_chat();
+    }
+
+          
+</script>
+{% endblock content %}

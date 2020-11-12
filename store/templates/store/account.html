@@ -1,0 +1,56 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<main>
+	<div class="row">
+		<div align="center" class="col-12">
+			<h1 id="account-title">Account Info</h1>
+	    	<h2>Username: {{ user.username }}</h2>
+	    	{% if user.emial %}
+	    		<h2 align="center">Email: {{ user.email }}</h2>
+	    	{% endif %}
+		</div>
+
+	    <div class="col-12 mt-5" align="center">
+	    	<h1 id="account-youritems">Your Items</h1>
+	    	{% if products %}
+		    	<div class="col-12 mb-3" align="center">
+		    		<button type="button" id="delete_button" class="btn btn-primary" data-toggle="modal" data-target="#przykladowyModal11">
+                    	Delete All Your Items
+                	</button>
+
+	                <div class="modal" id="przykladowyModal11" tabindex="-1" role="dialog">
+	                    <div class="modal-dialog" role="document">
+	                      <div class="modal-content">
+	                        <div class="modal-body">
+	                          <h1>Are you sure?</h1>
+	                        </div>
+	                        <div class="modal-footer">
+	                            <form align="center" action="" method="post">{% csrf_token %}
+	                                <input type="submit" name="delete" value="Yes, I want delete all my items"/>
+	                                <button onclick="deleting_pop_up.remove();">cancel</button> 
+	                            </form>
+	                        </div>
+	                      </div>
+	                    </div>
+	                </div>
+		    	</div>
+
+	<div class="row">
+		{% for product in products %}
+		    <div class="col-sm-12 col-md-4 col-lg-3 offset-md-1 mt-3" >
+		        <a class="products h-100" align="center" href="/products/{{ product.id }}">
+		            <img src="{{ product.images.all.first }}" class="img-fluid" width="250px" style="border-radius: 5px">
+		            	<h2>{{ product.title }}</h2>
+		                <h2>{{ product.price }} $</h2>
+		        </a>
+		    </div>
+		{% endfor %}
+	</div>
+			{% else %}
+			    <h2 class="col-12 mt-3" align="center">You don't have posted items</h2>
+		    {% endif %}
+		</div>
+	</div>
+</main>
+{% endblock content %}

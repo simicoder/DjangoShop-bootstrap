@@ -1,0 +1,210 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'Oswald', sans-serif;
+    background-color: white;
+}
+
+.navbar
+{
+    font-size: 23px;
+    background-color: #223834;
+}
+
+
+ol li a:hover
+{
+    background-color: rgba(0, 0, 0, 0.29);
+}
+
+.products
+{
+    font-size: 12px;
+    text-decoration: none;
+    color: #223834;
+    display: block;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.products:hover
+{
+    background-color: rgba(163, 170, 175, 0.9);
+}
+
+input
+{
+    background-color: #61b2b4;
+    border: #30a2b4 2px solid;
+    border-radius: 5px;
+    color:white;
+}
+textarea
+{
+    margin-top: 0.3em;
+    background-color: #61b2b4;
+    border: #30a2b4 2px solid;
+    border-radius: 5px;
+    color:white;
+}
+
+.file
+{
+	position: relative;
+    overflow: hidden;
+
+	text-align: center;
+    border-radius: 10px;
+	transition: all 0.2s ease-in-out;
+}
+
+.file:hover
+{
+    transform: scale(0.9);
+}
+
+.file input[type="file"] {
+    display: none;
+}
+
+#delete_button
+{
+    background-color: #61b2b4;
+    border: #30a2b4 2px solid;
+    border-radius: 5px;
+    color:white;
+}
+
+button
+{
+    background-color: #61b2b4;
+    border: #30a2b4 2px solid;
+    border-radius: 5px;
+    color:white;
+}
+
+#signup-labels-container
+{
+    width: 13em;
+}
+
+#signup-title
+{
+    margin-left: 6em;
+}
+
+#password-helptext
+{
+    display: block;
+    font-size: 15px;
+}
+
+#account-product-list
+{
+    margin-top: 5%;
+    width: 70em;
+    min-height: 5em;
+    margin-left: 15%;
+}
+
+#account-items-navbar
+{
+    width: 100%;
+}
+
+#delete_all_button
+{
+    font-size: 20px;
+    margin-left: 36%;
+}
+
+#account-any-product-text
+{
+    margin-left: 33%;
+    border-radius: 3%;
+    background-color: rgba(163, 170, 175, 0.9);
+    width: 10.3em;
+    text-align: center;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    filter: invert(100%);
+}
+
+.replies
+{
+    display: inline-block;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.replies p 
+{
+    max-width: 50%;
+    background-color: #42a5f5;
+    float: right;
+    border-radius: 20px 20px 3px 20px;
+    display: block;
+    padding: 7px 13px 7px 13px;
+    margin-top: 2px;
+}
+
+.sent
+{
+    display: inline-block;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.sent p 
+{
+    max-width: 50%;
+    float: left;
+    background-color: #98c4e6;
+    border-radius: 10px;
+    display: block;
+    border-radius: 20px 20px 20px 3px;
+    padding: 7px 13px 7px 13px;
+    margin-top: 2px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}

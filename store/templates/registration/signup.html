@@ -1,0 +1,20 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div align="center">
+  <h2 id="signup-title">Sign up</h2>
+  <form id="signup-form" method="post"> {% csrf_token %}
+  	<div id="signup-labels-container">
+    <label>Username{{ form.username }}</label><br>
+    <label>Email{{ form.email }}</label><br>
+    <label>Password{{ form.password1 }}<br>
+    	<p1 id="password-helptext">
+    		-must contain at least 8 characters<br>
+			-can’t be a commonly used password<br>
+			-can’t be entirely numeric</p1></label><br>
+    <label>Confirm Password{{ form.password2 }}</label><br>
+	</div>
+    <button type="submit">Sign up</button>
+  </form>
+</div>
+{% endblock %}
